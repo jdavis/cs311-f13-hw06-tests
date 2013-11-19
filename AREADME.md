@@ -12,6 +12,8 @@ You can do this using:
 
 ## Running the Tests
 
+### From the Command Line
+
 If you compile things from the command line and have ant installed:
 http://ant.apache.org/, you only have to modify a few lines to make it
 work.
@@ -24,6 +26,13 @@ work.
    implementation of IGraph.
 
 3. Now you should just be able to run `ant test` on the command line.
+
+### From an IDE
+
+1. Uninstall it.
+2. Open up a terminal.
+3. Go to the previous section.
+4. Done.
 
 ## Additional Things
 
