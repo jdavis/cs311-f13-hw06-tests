@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import edu.iastate.cs311.f13.hw6.IGraph;
+import edu.iastate.cs311.f13.hw6.IGraph.Pair;
 
 /**
  * Test IGraph implementation class.
@@ -73,9 +74,51 @@ public class TestGraph {
 
         g.addVertex(v);
 
-        Collection<String> expected = Arrays.asList();
-        Collection<String> actual = g.getOutgoingEdges(v);
+        Collection<Pair<String,String>> expected = Arrays.asList();
+        Collection<Pair<String,String>> actual = g.getOutgoingEdges(v);
 
         assertThat("Check a single vertex has no outgoing edges", actual, equalTo(expected));
+    }
+
+    @Test
+    public void testEmptyEdgesForTwoVertices() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+
+        g.addVertex(v);
+        g.addVertex(u);
+
+        Collection<Pair<String,String>> expected = Arrays.asList();
+        Collection<Pair<String,String>> actual = g.getOutgoingEdges(v);
+
+        assertThat("Check the first vertex has no outgoing edges", actual, equalTo(expected));
+
+        expected = Arrays.asList();
+        actual = g.getOutgoingEdges(u);
+
+        assertThat("Check the second vertex has no outgoing edges", actual, equalTo(expected));
+    }
+
+    @Test
+    public void testSingleEdgeForTwoVertices() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+        Pair<String, String> e = new Pair(v, u);
+
+        g.addVertex(v);
+        g.addVertex(u);
+        g.addEdge(e);
+
+        Collection<Pair<String,String>> expected = Arrays.asList(e);
+        Collection<Pair<String,String>> actual = g.getOutgoingEdges(v);
+
+        assertThat("Check the first vertex has 1 outgoing edge", actual, equalTo(expected));
+
+        expected = Arrays.asList(e);
+        actual = g.getOutgoingEdges(u);
+
+        assertThat("Check the second vertex has 1 outgoing edge", actual, equalTo(expected));
     }
 }
