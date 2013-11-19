@@ -1,10 +1,10 @@
+import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.hasItem;
-
-import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -162,5 +162,29 @@ public class TestGraph {
         actual = g.getOutgoingEdges(w);
 
         assertTrue("Check third vertex has no outgoing edges", actual.isEmpty());
+    }
+
+    @Test
+    public void testEdgesForDeletedVertex() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+
+        Pair<String, String> e1 = new Pair(v, u);
+
+        g.addVertex(v);
+        g.addVertex(u);
+
+        g.addEdge(e1);
+
+        g.deleteVertex(v);
+
+        Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
+
+        assertNull("Check that the outgoing edges for vertex 1 is undefined", actual);
+
+        actual = g.getOutgoingEdges(u);
+
+        assertTrue("Check the second vertex has no outgoing edge", actual.isEmpty());
     }
 }
