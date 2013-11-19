@@ -8,7 +8,7 @@ have your project.
 
 You can do this using:
 
-    git clone https://gist.github.com/7539406.git tests
+    git clone https://github.com/jdavis/cs311-f13-hw06-tests.git tests
 
 ## Running the Tests
 
