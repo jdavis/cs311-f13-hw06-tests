@@ -2,6 +2,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.hasItem;
 
 import org.junit.Test;
 
@@ -64,7 +65,11 @@ public class TestGraph {
         Collection<String> expected = (Collection<String>) vertices;
         Collection<String> actual = g.getVertices();
 
-        //assertThat("Check for added vertices", actual, hasItems(expected));
+
+        for (char c = 'A'; c < 'A' + 10; c += 1) {
+            String s = "" + c;
+            assertThat("Check for each added vertex", actual, hasItem(s));
+        }
     }
 
     @Test
