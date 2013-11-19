@@ -187,4 +187,17 @@ public class TestGraph {
 
         assertTrue("Check the second vertex has no outgoing edge", actual.isEmpty());
     }
+
+    @Test
+    public void testEdgesForNonexistantVertex() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+
+        g.addVertex(v);
+
+        Collection<Pair<String, String>> actual = g.getOutgoingEdges(u);
+
+        assertNull("Check that the outgoing edges for vertex 1 is undefined", actual);
+    }
 }
