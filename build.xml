@@ -1,0 +1,63 @@
+<project name="311Homework6" default="build" basedir=".">
+    <!--
+         Edit this value.
+
+         Replace "../src/" with the directory of your Java package.
+
+         It should be the same directory that edu/iastate/cs311/f13/hw6 lives.
+    -->
+
+    <property name="src.dir" value="../src/"/>
+
+    <!-- -->
+    <!-- -->
+    <!--
+         No additional changes should be required below this.
+    -->
+    <!-- -->
+    <!-- -->
+
+    <property name="test.dir" value="."/>
+    <property name="dest.dir" value="./dest"/>
+
+    <presetdef name="javac">
+        <javac includeantruntime="false"/>
+    </presetdef>
+
+    <path id="classpath.base">
+    </path>
+    <path id="classpath.test">
+        <pathelement location="junit.jar"/>
+        <pathelement location="hamcrest-core.jar"/>
+        <pathelement location="${test.dir}"/>
+        <pathelement location="${dest.dir}"/>
+        <path refid="classpath.base"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="${dest.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${dest.dir}"/>
+    </target>
+
+    <target name="build" depends="init">
+        <javac srcdir="${src.dir}" destdir="${dest.dir}"/>
+    </target>
+
+    <target name="build-test" depends="init">
+        <javac srcdir="${test.dir}" destdir="${dest.dir}">
+            <include name="TestRunner.java" />
+            <classpath refid="classpath.test"/>
+        </javac>
+    </target>
+
+    <target name="test" depends="build,build-test">
+        <junit dir="${dest.dir}" printsummary="yes" haltonfailure="no">
+            <classpath refid="classpath.test"/>
+            <formatter type="plain" usefile="false"/>
+            <test name="TestRunner"/>
+        </junit>
+    </target>
+</project>
