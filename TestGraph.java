@@ -1,9 +1,11 @@
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
-import static org.hamcrest.CoreMatchers.hasItems;
+
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.Matchers.empty;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +41,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertTrue("Empty graph should have no vertices", actual.isEmpty());
+        assertThat("Empty graph should have no vertices", actual, is(empty()));
     }
 
     /**
@@ -93,7 +95,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertTrue("Adding and removing a single vertex", actual.isEmpty());
+        assertThat("Adding and removing a single vertex", actual, is(empty()));
     }
 
     /**
@@ -115,7 +117,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertTrue("Adding and removing multiple vertices", actual.isEmpty());
+        assertThat("Adding and removing multiple vertices", actual, is(empty()));
     }
 
     /**
@@ -130,7 +132,7 @@ public class TestGraph {
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
 
-        assertTrue("Single vertex shouldn't have any edges", actual.isEmpty());
+        assertThat("Single vertex shouldn't have any edges", actual, is(empty()));
     }
 
     /**
@@ -147,11 +149,11 @@ public class TestGraph {
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
 
-        assertTrue("First vertex should have no edges", actual.isEmpty());
+        assertThat("First vertex should have no edges", actual, is(empty()));
 
         actual = g.getOutgoingEdges(u);
 
-        assertTrue("Second vertex should have no edges", actual.isEmpty());
+        assertThat("Second vertex should have no edges", actual, is(empty()));
     }
 
     /**
@@ -184,7 +186,7 @@ public class TestGraph {
 
         actual = g.getOutgoingEdges(w);
 
-        assertTrue("Third vertex should have no edges", actual.isEmpty());
+        assertThat("Third vertex should have no edges", actual, is(empty()));
     }
 
     /**
@@ -207,11 +209,11 @@ public class TestGraph {
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
 
-        assertNull("Deleted vertex should have undefined edges", actual);
+        assertThat("Deleted vertex should have undefined edges", actual, is(nullValue()));
 
         actual = g.getOutgoingEdges(u);
 
-        assertTrue("Single vertex should have no edges", actual.isEmpty());
+        assertThat("Single vertex should have no edges", actual, is(empty()));
     }
 
     /**
@@ -227,7 +229,7 @@ public class TestGraph {
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(u);
 
-        assertNull("Nonexistant vertex should have undefined edges", actual);
+        assertThat("Nonexistant vertex should have undefined edges", actual, is(nullValue()));
     }
 
     /**
