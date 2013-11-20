@@ -1,12 +1,14 @@
 import org.junit.Test;
+import org.hamcrest.Matcher;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
-import org.hamcrest.Matcher;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
+
+import java.lang.Math;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -351,10 +353,10 @@ public class TestTopologicalSort {
     }
 
     /**
-     * Test paralell scheduling with simple graph.
+     * Test paralell scheduling with single vertex graph.
      */
     @Test
-    public final void testSchedulingForSimpleGraph() {
+    public final void testSchedulingForSingleVertexGraph() {
         IGraph g = TestRunner.newGraph();
         HashMap<String, Integer> times = new HashMap<String, Integer>();
         ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
@@ -369,5 +371,134 @@ public class TestTopologicalSort {
         int actual = topo.minScheduleLength(g, times);
 
         assertThat("Minimum schedule should be 42", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with simple graph.
+     */
+    @Test
+    public final void testSchedulingForSimpleGraph() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v1 = "A";
+        int v1Time = 42;
+
+        String v2 = "B";
+        int v2Time = 3;
+
+        Pair<String, String> e1 = new Pair<String, String>(v1, v2);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+
+        times.put(v1, v1Time);
+        times.put(v2, v2Time);
+
+        g.addEdge(e1);
+
+        int expected = v1Time + v2Time;
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 42", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with three vertex graph.
+     */
+    @Test
+    public final void testSchedulingFor3Graph() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v1 = "A";
+        int v1Time = 42;
+
+        String v2 = "B";
+        int v2Time = 3;
+
+        String v3 = "C";
+        int v3Time = 7;
+
+        Pair<String, String> e1 = new Pair<String, String>(v1, v2);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v3);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+
+        times.put(v1, v1Time);
+        times.put(v2, v2Time);
+        times.put(v3, v3Time);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+
+        int expected = v1Time + Math.max(v2Time, v3Time);
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 42 + max(3, 7)", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with multiple components.
+     */
+    @Test
+    public final void testSchedulingForMulitpleComponentGraph() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v1 = "A";
+        int v1Time = 42;
+
+        String v2 = "B";
+        int v2Time = 3;
+
+        String v3 = "C";
+        int v3Time = 7;
+
+        String v4 = "D";
+        int v4Time = 10;
+
+        String v5 = "E";
+        int v5Time = 10;
+
+        String v6 = "F";
+        int v6Time = 10;
+
+        Pair<String, String> e1 = new Pair<String, String>(v1, v2);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v3);
+
+        Pair<String, String> e3 = new Pair<String, String>(v4, v5);
+        Pair<String, String> e4 = new Pair<String, String>(v4, v6);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        g.addVertex(v6);
+
+        times.put(v1, v1Time);
+        times.put(v2, v2Time);
+        times.put(v3, v3Time);
+
+        times.put(v4, v4Time);
+        times.put(v5, v5Time);
+        times.put(v6, v6Time);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+
+        g.addEdge(e3);
+        g.addEdge(e4);
+
+        int expected = Math.max(v1Time + Math.max(v2Time, v3Time), v4Time + Math.max(v5Time, v6Time));
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 42 + max(3, 7)", actual, equalTo(expected));
     }
 }
