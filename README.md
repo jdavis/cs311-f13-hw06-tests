@@ -21,9 +21,15 @@ work.
 1. First, open up `build.xml` and modify the property with the name `src.dir`.
    It should point to the directory that your package lives in.
 
-2. Open up the `TestRunner.java` file and edit the return line of the method
-   `newInstance`.  The class that is instantiated should point to your
-   implementation of `IGraph`.
+2. Open up the `TestRunner.java` file and edit all the methods that start with
+   `new[...]` to point to your implementation classes.
+
+   1. You should change `return new Graph();` such that `Graph` is the class
+      you wrote that implements `IGraph`.
+
+   2. You should change `return new TopologicalSort();` such that
+      `TopologicalSort` is the class you wrote that implements
+      `ITopologicalSortAlgorithms`.
 
 3. Now you should just be able to run `ant test` on the command line.
 
