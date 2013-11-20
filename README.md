@@ -1,6 +1,15 @@
 CS311 Homework 6 Tests
 ======================
 
+## Coverage Status
+
+- ✓ IGraph Implementation
+- ✓ Topological Sort
+- Parallel Precedence-Constrained Scheduling
+- Maximum Flow
+- Maximum Flow with Vertex Capacities
+- Maximum Cardinality Pairwise Vertex-Disjoint Paths
+
 ## Downloading
 
 To use these tests, just use Git and clone them into the directory you
