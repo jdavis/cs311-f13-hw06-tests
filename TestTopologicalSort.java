@@ -444,7 +444,7 @@ public class TestTopologicalSort {
      * Test paralell scheduling with multiple components.
      */
     @Test
-    public final void testSchedulingForMulitpleComponentGraph() {
+    public final void testSchedulingForUnevenDepthComponentGraph() {
         IGraph g = TestRunner.newGraph();
         HashMap<String, Integer> times = new HashMap<String, Integer>();
         ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
@@ -497,6 +497,206 @@ public class TestTopologicalSort {
         int expected = Math.max(v1Time + Math.max(v2Time, v3Time), v4Time + Math.max(v5Time, v6Time));
         int actual = topo.minScheduleLength(g, times);
 
-        assertThat("Minimum schedule should be 42 + max(3, 7)", actual, equalTo(expected));
+        assertThat("Minimum schedule should be max(42 + max(3, 7, 10 + max(10, 10)))", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with uneven depth components.
+     */
+    @Test
+    public final void testSchedulingForMulitpleComponentGraph() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v1 = "A";
+        int v1Time = 42;
+
+        String v2 = "B";
+        int v2Time = 3;
+
+        String v3 = "C";
+        int v3Time = 7;
+
+        String v4 = "D";
+        int v4Time = 5;
+
+        String v5 = "E";
+        int v5Time = 5;
+
+        String v6 = "F";
+        int v6Time = 5;
+
+        String v7 = "G";
+        int v7Time = 5;
+
+        String v8 = "H";
+        int v8Time = 5;
+
+        Pair<String, String> e1 = new Pair<String, String>(v1, v2);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v3);
+
+        Pair<String, String> e3 = new Pair<String, String>(v4, v5);
+        Pair<String, String> e4 = new Pair<String, String>(v4, v6);
+        Pair<String, String> e5 = new Pair<String, String>(v6, v7);
+        Pair<String, String> e6 = new Pair<String, String>(v7, v8);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        g.addVertex(v6);
+        g.addVertex(v7);
+        g.addVertex(v8);
+
+        times.put(v1, v1Time);
+        times.put(v2, v2Time);
+        times.put(v3, v3Time);
+
+        times.put(v4, v4Time);
+        times.put(v5, v5Time);
+        times.put(v6, v6Time);
+        times.put(v7, v7Time);
+        times.put(v8, v8Time);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+
+        int expected = Math.max(v1Time + Math.max(v2Time, v3Time), v4Time + Math.max(v5Time, v6Time) + v7Time + v8Time);
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be max(42 + max(3, 7), 5 + max(5, 5) + 5 + 5)", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with uneven depth components and one large
+     * component.
+     */
+    @Test
+    public final void testSchedulingWithLargeComponent() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v1 = "A";
+        int v1Time = 1;
+
+        String v2 = "B";
+        int v2Time = 1;
+
+        String v3 = "C";
+        int v3Time = 1;
+
+        String v4 = "D";
+        int v4Time = 1;
+
+        String v5 = "E";
+        int v5Time = 1;
+
+        String v6 = "F";
+        int v6Time = 1;
+
+        String v7 = "G";
+        int v7Time = 1;
+
+        String v8 = "H";
+        int v8Time = 1;
+
+        String v9 = "I";
+        int v9Time = 20;
+
+        Pair<String, String> e1 = new Pair<String, String>(v1, v2);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v3);
+
+        Pair<String, String> e3 = new Pair<String, String>(v4, v5);
+        Pair<String, String> e4 = new Pair<String, String>(v4, v6);
+        Pair<String, String> e5 = new Pair<String, String>(v6, v7);
+        Pair<String, String> e6 = new Pair<String, String>(v7, v8);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        g.addVertex(v6);
+        g.addVertex(v7);
+        g.addVertex(v8);
+        g.addVertex(v9);
+
+        times.put(v1, v1Time);
+        times.put(v2, v2Time);
+        times.put(v3, v3Time);
+
+        times.put(v4, v4Time);
+        times.put(v5, v5Time);
+        times.put(v6, v6Time);
+        times.put(v7, v7Time);
+        times.put(v8, v8Time);
+
+        times.put(v9, v9Time);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+
+        int expected = v9Time;
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 20", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with large child.
+     */
+    @Test
+    public final void testSchedulingWithLargeChild() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v1 = "A";
+        int v1Time = 2;
+
+        String v2 = "B";
+        int v2Time = 2;
+
+        String v3 = "C";
+        int v3Time = 8;
+
+        String v4 = "D";
+        int v4Time = 10;
+
+        Pair<String, String> e1 = new Pair<String, String>(v1, v2);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v3);
+        Pair<String, String> e3 = new Pair<String, String>(v2, v4);
+
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+
+        times.put(v1, v1Time);
+        times.put(v2, v2Time);
+        times.put(v3, v3Time);
+        times.put(v4, v4Time);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+
+        int expected = v1Time + Math.max(v2Time + v4Time, v3Time);
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 2 + max(2 + 10, 8)", actual, equalTo(expected));
     }
 }
