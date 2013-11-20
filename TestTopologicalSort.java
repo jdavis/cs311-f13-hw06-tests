@@ -351,7 +351,7 @@ public class TestTopologicalSort {
     }
 
     /**
-     * Test paralell scheduling with empty graph.
+     * Test paralell scheduling with simple graph.
      */
     @Test
     public final void testSchedulingForSimpleGraph() {
