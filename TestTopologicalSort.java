@@ -8,8 +8,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 
-import java.util.List;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 import edu.iastate.cs311.f13.hw6.IGraph;
 import edu.iastate.cs311.f13.hw6.IGraph.Pair;
