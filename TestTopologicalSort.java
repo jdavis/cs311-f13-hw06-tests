@@ -1,14 +1,12 @@
 import org.junit.Test;
-import org.hamcrest.Matcher;
+
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNull;
+
+import org.hamcrest.Matcher;
 import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
-
-import java.lang.Math;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.Matchers.empty;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,7 +30,7 @@ public class TestTopologicalSort {
 
         List<String> actual = topo.topologicalSort(g);
 
-        assertTrue("Empty topo sort should be empty", actual.isEmpty());
+        assertThat("Empty topo sort should be empty", actual, is(empty()));
     }
 
     /**
