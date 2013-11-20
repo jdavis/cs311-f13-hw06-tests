@@ -2,11 +2,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNull;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.hasItem;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
 
