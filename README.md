@@ -5,7 +5,7 @@ CS311 Homework 6 Tests
 
 - ✓ IGraph Implementation
 - ✓ Topological Sort
-- Parallel Precedence-Constrained Scheduling
+- ✓ Parallel Precedence-Constrained Scheduling
 - Maximum Flow
 - Maximum Flow with Vertex Capacities
 - Maximum Cardinality Pairwise Vertex-Disjoint Paths
