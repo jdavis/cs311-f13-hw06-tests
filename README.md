@@ -58,5 +58,5 @@ More than likely you'll only have to run **clean** and **test**.
 
 ## Contributing
 
-Feel free to Fork this Gist and make changes. Let me know when/if you do
-and I'll add them to the existing tests.
+Feel free to Fork this repo and make changes. Just issue a pull request and
+I'll add in your tests/changes.
