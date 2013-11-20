@@ -164,8 +164,8 @@ public class TestGraph {
         String u = "B";
         String w = "C";
 
-        Pair<String, String> e1 = new Pair(v, u);
-        Pair<String, String> e2 = new Pair(u, w);
+        Pair<String, String> e1 = new Pair<String, String>(v, u);
+        Pair<String, String> e2 = new Pair<String, String>(u, w);
 
         g.addVertex(v);
         g.addVertex(u);
@@ -196,7 +196,7 @@ public class TestGraph {
         String v = "A";
         String u = "B";
 
-        Pair<String, String> e1 = new Pair(v, u);
+        Pair<String, String> e1 = new Pair<String, String>(v, u);
 
         g.addVertex(v);
         g.addVertex(u);
