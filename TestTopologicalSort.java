@@ -19,6 +19,9 @@ import edu.iastate.cs311.f13.hw6.ITopologicalSortAlgorithms;
  * Test topological algorithms.
  */
 public class TestTopologicalSort {
+    /**
+     * Test toposort for empty graph.
+     */
     @Test
     public final void testTopoForEmptyGraph() {
         IGraph g = TestRunner.newGraph();
@@ -29,6 +32,9 @@ public class TestTopologicalSort {
         assertTrue("Empty topo sort should be empty", actual.isEmpty());
     }
 
+    /**
+     * Test toposort for single vertex graph.
+     */
     @Test
     public final void testTopoForSimpleGraph() {
         IGraph g = TestRunner.newGraph();
@@ -44,6 +50,9 @@ public class TestTopologicalSort {
         assertThat("Simple topo sort for single vertex", actual, equalTo(expected));
     }
 
+    /**
+     * Test topograph for graph with two vertices.
+     */
     @Test
     public final void testTopoForSimpleWithTwoVertices() {
         IGraph g = TestRunner.newGraph();
@@ -65,6 +74,12 @@ public class TestTopologicalSort {
         assertThat("Simple topo sort with 2 vertices", actual, equalTo(expected));
     }
 
+    /**
+     * Test toposort with 7 vertices and 6 edges.
+     *
+     * There are ~300 different possible toposorts for this given DAG. The
+     * total combinations of vertices is of course 7! = 5040;
+     */
     @Test
     public final void testTopoExtreme() {
         IGraph g = TestRunner.newGraph();
@@ -318,4 +333,5 @@ public class TestTopologicalSort {
 
         assertThat("Extreme topo sort test", actual, anyOf(expected));
     }
+
 }
