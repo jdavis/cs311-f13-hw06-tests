@@ -24,8 +24,8 @@
         <javac includeantruntime="false"/>
     </presetdef>
 
-    <path id="classpath.base">
-    </path>
+    <path id="classpath.base"></path>
+
     <path id="classpath.test">
         <pathelement location="junit.jar"/>
         <pathelement location="hamcrest-core.jar"/>
