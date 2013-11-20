@@ -25,4 +25,16 @@ public final class TestRunner {
     public static IGraph newGraph() {
         return new Graph();
     }
+
+    /**
+     * Create a new instance of the above class automatically.
+     * @return An instance that adheres to the ITopologicalSort interface
+     *
+     * Replace `TopologicalSort` class with the name of your implementation of the
+     * ITopologicalSort interface.
+     *
+     */
+    public static ITopologicalSortAlgorithms newTopoSort() {
+        return new TopologicalSort();
+    }
 }
