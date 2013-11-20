@@ -35,6 +35,10 @@ work.
 
 ### From an IDE
 
+I don't use an IDE so I have no idea how to get them to work in
+Eclipse/IntelliJ. Let me know if you figure it out, or better yet, fork it and
+make a pull request.
+
 1. Uninstall your IDE.
 2. Open up a terminal.
 3. Go to the previous section.
