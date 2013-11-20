@@ -335,4 +335,39 @@ public class TestTopologicalSort {
         assertThat("Extreme topo sort test", actual, anyOf(expected));
     }
 
+    /**
+     * Test paralell scheduling with empty graph.
+     */
+    @Test
+    public final void testSchedulingForEmptyGraph() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        int expected = 0;
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 0", actual, equalTo(expected));
+    }
+
+    /**
+     * Test paralell scheduling with empty graph.
+     */
+    @Test
+    public final void testSchedulingForSimpleGraph() {
+        IGraph g = TestRunner.newGraph();
+        HashMap<String, Integer> times = new HashMap<String, Integer>();
+        ITopologicalSortAlgorithms topo = TestRunner.newTopoSort();
+
+        String v = "A";
+        int vTime = 42;
+
+        g.addVertex(v);
+        times.put(v, vTime);
+
+        int expected = vTime;
+        int actual = topo.minScheduleLength(g, times);
+
+        assertThat("Minimum schedule should be 42", actual, equalTo(expected));
+    }
 }
