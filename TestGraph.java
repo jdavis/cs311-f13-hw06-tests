@@ -39,7 +39,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertTrue("Check the graph has no vertices", actual.isEmpty());
+        assertTrue("Empty graph should have no vertices", actual.isEmpty());
     }
 
     /**
@@ -54,7 +54,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertThat("Check the added vertex was added", actual, hasItems(v));
+        assertThat("Adding a vertex should exist", actual, hasItems(v));
     }
 
     /**
@@ -76,7 +76,7 @@ public class TestGraph {
 
         for (char c = 'A'; c < 'A' + MAX_VERTICES; c += 1) {
             String s = "" + c;
-            assertThat("Check for each added vertex", actual, hasItem(s));
+            assertThat("Adding multiple vertices should work", actual, hasItem(s));
         }
     }
 
@@ -93,7 +93,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertTrue("Check for empty set of vertices", actual.isEmpty());
+        assertTrue("Adding and removing a single vertex", actual.isEmpty());
     }
 
     /**
@@ -115,7 +115,7 @@ public class TestGraph {
 
         Collection<String> actual = g.getVertices();
 
-        assertTrue("Check for added vertices", actual.isEmpty());
+        assertTrue("Adding and removing multiple vertices", actual.isEmpty());
     }
 
     /**
@@ -147,18 +147,18 @@ public class TestGraph {
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
 
-        assertTrue("Check the first vertex has no outgoing edges", actual.isEmpty());
+        assertTrue("First vertex should have no edges", actual.isEmpty());
 
         actual = g.getOutgoingEdges(u);
 
-        assertTrue("Check the second vertex has no outgoing edges", actual.isEmpty());
+        assertTrue("Second vertex should have no edges", actual.isEmpty());
     }
 
     /**
      * Test of multiple outgoing edges.
      */
     @Test
-    public void testMultipleEdgesSimple() {
+    public final void testMultipleEdgesSimple() {
         IGraph g = TestRunner.newGraph();
         String v = "A";
         String u = "B";
