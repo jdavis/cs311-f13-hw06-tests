@@ -229,4 +229,30 @@ public class TestGraph {
 
         assertNull("Nonexistant vertex should have undefined edges", actual);
     }
+
+    /**
+     * Test that a nonexistant vertex returns no edges.
+     */
+    @Test
+    public final void testRemovingEdge() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+
+        Pair<String, String> e1 = new Pair<String, String>(v, u);
+
+        g.addVertex(v);
+        g.addVertex(u);
+
+        g.addEdge(e1);
+        g.deleteEdge(e1);
+
+        Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
+
+        assertTrue("First vertex should have no edges", actual.isEmpty());
+
+        actual = g.getOutgoingEdges(u);
+
+        assertTrue("Second vertex should have no edges", actual.isEmpty());
+    }
 }
