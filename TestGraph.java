@@ -231,7 +231,7 @@ public class TestGraph {
     }
 
     /**
-     * Test that a nonexistant vertex returns no edges.
+     * Test that a removing an edge works.
      */
     @Test
     public final void testRemovingEdge() {
