@@ -35,7 +35,7 @@ work.
 
 ### From an IDE
 
-1. Uninstall it.
+1. Uninstall your IDE.
 2. Open up a terminal.
 3. Go to the previous section.
 4. Done.
