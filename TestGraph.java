@@ -251,10 +251,37 @@ public class TestGraph {
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
 
-        assertTrue("First vertex should have no edges", actual.isEmpty());
+        assertThat("First vertex should have no edges", actual, is(empty()));
 
         actual = g.getOutgoingEdges(u);
 
-        assertTrue("Second vertex should have no edges", actual.isEmpty());
+        assertThat("Second vertex should have no edges", actual, is(empty()));
+    }
+
+    /**
+     * Test that an edge with an incoming edge deletes the edge.
+     */
+    @Test
+    public final void testRemovingVertexWithIncomingEdge() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+
+        Pair<String, String> e1 = new Pair<String, String>(v, u);
+
+        g.addVertex(v);
+        g.addVertex(u);
+
+        g.addEdge(e1);
+
+        g.deleteVertex(u);
+
+        Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
+
+        assertThat("First vertex should have no edges", actual, is(empty()));
+
+        actual = g.getOutgoingEdges(u);
+
+        assertThat("Second vertex should not exist", actual, is(nullValue()));
     }
 }
