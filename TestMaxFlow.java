@@ -31,26 +31,53 @@ public class TestMaxFlow {
         mMax = TestRunner.newMaxFlow();
     }
 
+    public static int calcFlow(final IGraph g,
+            final Map<Pair<String, String>, Integer> f,
+            final String s) {
+        int flow = 0;
+
+        for (String v : g.getVertices()) {
+            Pair<String, String> in = new Pair<String, String>(s, v);
+            Pair<String, String> out = new Pair<String, String>(v, s);
+
+            if (f.containsKey(in)) {
+                flow += f.get(in);
+            }
+
+            if (f.containsKey(out)) {
+                flow -= f.get(out);
+            }
+        }
+
+        return flow;
+    }
+
     /**
      * Test graph with two vertices but no edges.
      */
     @Test
     public final void testTwoVertexNoEdgesMaxFlow() {
-        System.out.println("test1");
         HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
-        HashMap<Pair<String, String>, Integer> m = new HashMap<Pair<String, String>, Integer>();
         IGraph g = TestRunner.newGraph();
 
-        String v = "A";
-        String u = "B";
+        String s = "A";
+        String t = "B";
 
-        g.addVertex(v);
-        g.addVertex(u);
+        g.addVertex(s);
+        g.addVertex(t);
 
-        Set<Map.Entry<Pair<String, String>, Integer>> actual = mMax.maxFlow(g, v, u, c).entrySet();
-        Set<Map.Entry<Pair<String, String>, Integer>> expected = m.entrySet();
+        int actual, expected;
+        Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        assertThat("Edge with no edges should have no maxFlow", actual, equalTo(expected));
+        actual = calcFlow(g, max, s);
+        expected = 0;
+
+        assertThat("Source out flow equals 0", actual, equalTo(expected));
+
+        actual = calcFlow(g, max, t);
+        expected = 0;
+
+        assertThat("Sink in flow equals 0", actual, equalTo(expected));
     }
 
     /**
@@ -58,27 +85,32 @@ public class TestMaxFlow {
      */
     @Test
     public final void testTwoVertexWithEdgeMaxFlow() {
-        System.out.println("test2");
         HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
-        HashMap<Pair<String, String>, Integer> m = new HashMap<Pair<String, String>, Integer>();
         IGraph g = TestRunner.newGraph();
 
-        String v = "A";
-        String u = "B";
+        String s = "A";
+        String t = "B";
 
-        Pair<String, String> e1 = new Pair<String, String>(v, u);
+        Pair<String, String> e1 = new Pair<String, String>(s, t);
 
-        g.addVertex(v);
-        g.addVertex(u);
+        g.addVertex(s);
+        g.addVertex(t);
 
         g.addEdge(e1);
         c.put(e1, 9);
-        m.put(e1, 9);
 
-        Set<Map.Entry<Pair<String, String>, Integer>> actual = mMax.maxFlow(g, v, u, c).entrySet();
-        Set<Map.Entry<Pair<String, String>, Integer>> expected = m.entrySet();
+        int actual, expected;
+        Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        assertThat("Two vertices with single edge should equal that edge capacity", actual, equalTo(expected));
+        actual = calcFlow(g, max, s);
+        expected = 9;
+
+        assertThat("Source out flow equals 9", actual, equalTo(expected));
+
+        actual = calcFlow(g, max, t);
+        expected = -9;
+
+        assertThat("Sink in flow equals 9", actual, equalTo(expected));
     }
 
     /**
@@ -86,9 +118,7 @@ public class TestMaxFlow {
      */
     @Test
     public final void testTriangleMaxFlow() {
-        System.out.println("test3");
         HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
-        HashMap<Pair<String, String>, Integer> m = new HashMap<Pair<String, String>, Integer>();
         IGraph g = TestRunner.newGraph();
 
         String s = "A";
@@ -112,24 +142,28 @@ public class TestMaxFlow {
 
         g.addEdge(e1);
         c.put(e1, e1C);
-        m.put(e1, e3C);
 
         g.addEdge(e2);
         c.put(e2, e2C);
-        m.put(e2, e4C);
 
         g.addEdge(e3);
         c.put(e3, e3C);
-        m.put(e3, e3C);
 
         g.addEdge(e4);
         c.put(e4, e4C);
-        m.put(e4, e4C);
 
-        Set<Map.Entry<Pair<String, String>, Integer>> actual = mMax.maxFlow(g, s, t, c).entrySet();
-        Set<Map.Entry<Pair<String, String>, Integer>> expected = m.entrySet();
+        int actual, expected;
+        Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        assertThat("Two vertices with single edge should equal that edge capacity", actual, equalTo(expected));
+        actual = calcFlow(g, max, s);
+        expected = 8;
+
+        assertThat("Source out flow equals 23", actual, equalTo(expected));
+
+        actual = calcFlow(g, max, t);
+        expected = -8;
+
+        assertThat("Sink in flow equals 23", actual, equalTo(expected));
     }
 
     /**
@@ -140,9 +174,7 @@ public class TestMaxFlow {
      */
     @Test
     public final void testComplexMaxFlow() {
-        System.out.println("test4");
         HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
-        HashMap<Pair<String, String>, Integer> m = new HashMap<Pair<String, String>, Integer>();
         IGraph g = TestRunner.newGraph();
 
         String s = "s";
@@ -172,111 +204,50 @@ public class TestMaxFlow {
         int e9C = 4;
 
         g.addVertex(s);
+        g.addVertex(v1);
         g.addVertex(v2);
         g.addVertex(v3);
         g.addVertex(v4);
-        g.addVertex(v5);
         g.addVertex(t);
 
         g.addEdge(e1);
         c.put(e1, e1C);
-        m.put(e1, 12);
 
         g.addEdge(e2);
         c.put(e2, e2C);
-        m.put(e2, 11);
 
         g.addEdge(e3);
         c.put(e3, e3C);
-        m.put(e3, 12);
 
         g.addEdge(e4);
         c.put(e4, e4C);
-        m.put(e4, 0);
 
         g.addEdge(e5);
         c.put(e5, e5C);
-        m.put(e5, 11);
 
         g.addEdge(e6);
         c.put(e6, e6C);
-        m.put(e6, 0);
 
         g.addEdge(e7);
         c.put(e7, e7C);
-        m.put(e7, 19);
 
         g.addEdge(e8);
         c.put(e8, e8C);
-        m.put(e8, 7);
 
         g.addEdge(e9);
         c.put(e9, e9C);
-        m.put(e9, 4);
 
-        Set<Map.Entry<Pair<String, String>, Integer>> actual = mMax.maxFlow(g, s, t, c).entrySet();
-        Set<Map.Entry<Pair<String, String>, Integer>> expected = m.entrySet();
+        int actual, expected;
+        Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        assertThat("Two vertices with single edge should equal that edge capacity", actual, equalTo(expected));
-    }
+        actual = calcFlow(g, max, s);
+        expected = 23;
 
-    /**
-     * Test graph with more complex graph.
-     *
-     * Source:
-     *      Intro to Algorithms, pg. 728, Figure 26.7
-     */
-    @Test
-    public final void testLargeCapacityComplexMaxFlow() {
-        System.out.println("test5");
-        HashMap<Pair<String, String>, Integer> c = new HashMap<Pair<String, String>, Integer>();
-        HashMap<Pair<String, String>, Integer> m = new HashMap<Pair<String, String>, Integer>();
-        IGraph g = TestRunner.newGraph();
+        assertThat("Source out flow equals 23", actual, equalTo(expected));
 
-        String s = "A";
-        String u = "B";
-        String v = "C";
-        String t = "D";
+        actual = calcFlow(g, max, t);
+        expected = -23;
 
-        Pair<String, String> e1 = new Pair<String, String>(s, u);
-        int e1C = 1000000;
-        Pair<String, String> e2 = new Pair<String, String>(s, v);
-        int e2C = 1000000;
-        Pair<String, String> e3 = new Pair<String, String>(u, v);
-        int e3C = 1;
-        Pair<String, String> e4 = new Pair<String, String>(u, t);
-        int e4C = 1000000;
-        Pair<String, String> e5 = new Pair<String, String>(v, t);
-        int e5C = 1000000;
-
-        g.addVertex(s);
-        g.addVertex(u);
-        g.addVertex(v);
-        g.addVertex(t);
-
-        g.addEdge(e1);
-        c.put(e1, e1C);
-        m.put(e1, e1C);
-
-        g.addEdge(e2);
-        c.put(e2, e2C);
-        m.put(e2, e2C);
-
-        g.addEdge(e3);
-        c.put(e3, e3C);
-        m.put(e3, 0);
-
-        g.addEdge(e4);
-        c.put(e4, e4C);
-        m.put(e4, e4C);
-
-        g.addEdge(e5);
-        c.put(e5, e5C);
-        m.put(e5, e5C);
-
-        Set<Map.Entry<Pair<String, String>, Integer>> actual = mMax.maxFlow(g, s, t, c).entrySet();
-        Set<Map.Entry<Pair<String, String>, Integer>> expected = m.entrySet();
-
-        assertThat("Two vertices with single edge should equal that edge capacity", actual, equalTo(expected));
+        assertThat("Sink in flow equals 23", actual, equalTo(expected));
     }
 }
