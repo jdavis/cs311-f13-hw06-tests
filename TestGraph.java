@@ -60,6 +60,36 @@ public class TestGraph {
     }
 
     /**
+     * Test if adding one vertex works.
+     */
+    @Test
+    public final void testAddVertexMultipleTimes() {
+        IGraph g = TestRunner.newGraph();
+        String v = "A";
+        String u = "B";
+
+        g.addVertex(v);
+        g.addVertex(u);
+
+        Pair<String, String> e = new Pair<String, String>(v, u);
+
+        g.addVertex(v);
+        g.addVertex(u);
+
+        g.addEdge(e);
+
+        g.addVertex(v);
+
+        Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
+
+        assertThat("First vertex should have one edge", actual, hasItems(e));
+
+        actual = g.getOutgoingEdges(u);
+
+        assertThat("Second vertex should have no edges", actual, is(empty()));
+    }
+
+    /**
      * Test that adding multiple vertices works.
      */
     @Test
