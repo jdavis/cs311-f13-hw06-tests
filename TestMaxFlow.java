@@ -145,30 +145,30 @@ public class TestMaxFlow {
         HashMap<Pair<String, String>, Integer> m = new HashMap<Pair<String, String>, Integer>();
         IGraph g = TestRunner.newGraph();
 
-        String s = "A";
-        String v2 = "B";
-        String v3 = "C";
-        String v4 = "D";
-        String v5 = "E";
-        String t = "F";
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String v4 = "v4";
+        String t = "t";
 
-        Pair<String, String> e1 = new Pair<String, String>(s, v2);
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
         int e1C = 16;
-        Pair<String, String> e2 = new Pair<String, String>(s, v3);
+        Pair<String, String> e2 = new Pair<String, String>(s, v2);
         int e2C = 13;
-        Pair<String, String> e3 = new Pair<String, String>(v2, v4);
+        Pair<String, String> e3 = new Pair<String, String>(v1, v3);
         int e3C = 12;
-        Pair<String, String> e4 = new Pair<String, String>(v3, v2);
+        Pair<String, String> e4 = new Pair<String, String>(v2, v1);
         int e4C = 4;
-        Pair<String, String> e5 = new Pair<String, String>(v3, v5);
+        Pair<String, String> e5 = new Pair<String, String>(v2, v4);
         int e5C = 14;
-        Pair<String, String> e6 = new Pair<String, String>(v4, v3);
+        Pair<String, String> e6 = new Pair<String, String>(v3, v2);
         int e6C = 9;
-        Pair<String, String> e7 = new Pair<String, String>(v4, t);
+        Pair<String, String> e7 = new Pair<String, String>(v3, t);
         int e7C = 20;
-        Pair<String, String> e8 = new Pair<String, String>(v5, v4);
+        Pair<String, String> e8 = new Pair<String, String>(v4, v3);
         int e8C = 7;
-        Pair<String, String> e9 = new Pair<String, String>(v5, t);
+        Pair<String, String> e9 = new Pair<String, String>(v4, t);
         int e9C = 4;
 
         g.addVertex(s);
@@ -219,14 +219,13 @@ public class TestMaxFlow {
 
         assertThat("Two vertices with single edge should equal that edge capacity", actual, equalTo(expected));
     }
-}
 
     /**
      * Test graph with more complex graph.
      *
      * Source:
      *      Intro to Algorithms, pg. 728, Figure 26.7
-     *
+     */
     @Test
     public final void testLargeCapacityComplexMaxFlow() {
         System.out.println("test5");
@@ -281,4 +280,3 @@ public class TestMaxFlow {
         assertThat("Two vertices with single edge should equal that edge capacity", actual, equalTo(expected));
     }
 }
-*/
