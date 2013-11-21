@@ -65,6 +65,25 @@ This ant `build.xml` file contains a few targets:
 
 More than likely you'll only have to run **clean** and **test**.
 
+### Tips
+
+To make debugging easier when using these tests, I highly suggest you add this
+method to your Pair class in your IGraph interface:
+
+```java
+    public class Pair<X, Y> {
+
+        // ...
+
+        @Override
+        public String toString() {
+            return "" + first + " -> " + second;
+        }
+
+        // ...
+    }
+```
+
 ## Contributing
 
 Feel free to Fork this repo and make changes. Just issue a pull request and
