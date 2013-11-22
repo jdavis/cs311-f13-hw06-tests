@@ -10,6 +10,19 @@ CS311 Homework 6 Tests
 - ✓ Maximum Flow with Vertex Capacities
 - Maximum Cardinality Pairwise Vertex-Disjoint Paths
 
+## Dependencies
+
+- JUnit 4.11
+- Hamcrest 1.3
+
+They jars are included in the repo.
+
+**Note:**
+> It's important to use JUnit 4.11 *and* Hamcrest 1.3. If you don't, there will
+> more than likely be errors. To see what versions are being used, look at this
+> answer on StackOverflow:
+> [http://stackoverflow.com/a/10779224/2337627](http://stackoverflow.com/a/10779224/2337627).
+
 ## Downloading
 
 To use these tests, just use Git and clone them into the directory you
