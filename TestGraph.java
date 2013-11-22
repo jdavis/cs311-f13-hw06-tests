@@ -1,8 +1,8 @@
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.empty;
@@ -55,8 +55,11 @@ public class TestGraph {
         g.addVertex(v);
 
         Collection<String> actual = g.getVertices();
+        Collection<String> expected = new ArrayList<String>();
 
-        assertThat("Adding a vertex should exist", actual, hasItems(v));
+        expected.add(v);
+
+        assertThat("Adding a vertex should exist", actual, hasItem(v));
     }
 
     /**
@@ -178,8 +181,11 @@ public class TestGraph {
         g.addVertex(v);
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
+        Collection<Pair<String, String>> expected = new ArrayList<Pair<String, String>>();
 
-        assertThat("First vertex should have one edge", actual, hasItems(e));
+        expected.add(e);
+
+        assertThat("First vertex should have one edge", actual, equalTo(expected));
 
         actual = g.getOutgoingEdges(u);
 
@@ -229,12 +235,19 @@ public class TestGraph {
         g.addEdge(e2);
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
+        Collection<Pair<String, String>> expected = new ArrayList<Pair<String, String>>();
 
-        assertThat("First vertex should have one edge", actual, hasItems(e1));
+        expected.add(e1);
+
+        assertThat("First vertex should have one edge", actual, equalTo(expected));
 
         actual = g.getOutgoingEdges(u);
 
-        assertThat("Second vertex should have one edge", actual, hasItems(e2));
+        expected = new ArrayList<Pair<String, String>>();
+
+        expected.add(e2);
+
+        assertThat("Second vertex should have one edge", actual, equalTo(expected));
 
         actual = g.getOutgoingEdges(w);
 
