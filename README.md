@@ -7,7 +7,7 @@ CS311 Homework 6 Tests
 - ✓ Topological Sort
 - ✓ Parallel Precedence-Constrained Scheduling
 - ✓ Maximum Flow
-- Maximum Flow with Vertex Capacities
+- ✓ Maximum Flow with Vertex Capacities
 - Maximum Cardinality Pairwise Vertex-Disjoint Paths
 
 ## Downloading
