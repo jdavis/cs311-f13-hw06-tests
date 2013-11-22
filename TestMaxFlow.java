@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.everyItem;
 import static org.hamcrest.Matchers.isIn;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -31,25 +32,67 @@ public class TestMaxFlow {
         mMax = TestRunner.newMaxFlow();
     }
 
-    public static int calcFlow(final IGraph g,
-            final Map<Pair<String, String>, Integer> f,
-            final String s) {
+    public static int calcFlow(final Map<Pair<String, String>, Integer> f) {
+        HashMap<String, Integer> in = new HashMap<String, Integer>();
+        HashMap<String, Integer> out = new HashMap<String, Integer>();
+        HashSet<String> vertices = new HashSet<String>();
+
         int flow = 0;
 
-        for (String v : g.getVertices()) {
-            Pair<String, String> in = new Pair<String, String>(s, v);
-            Pair<String, String> out = new Pair<String, String>(v, s);
+        for (Entry<Pair<String, String>, Integer> e : f.entrySet()) {
+            Pair<String, String> edge = e.getKey();
+            String v = edge.first;
+            String u = edge.second;
+            int vTotal, uTotal;
 
-            if (f.containsKey(in)) {
-                flow += f.get(in);
+            if (!in.containsKey(v)) {
+                vTotal = 0;
+            } else {
+                vTotal = in.get(v);
             }
 
-            if (f.containsKey(out)) {
-                flow -= f.get(out);
+            if (!out.containsKey(u)) {
+                uTotal = 0;
+            } else {
+                uTotal = out.get(u);
+            }
+
+            int x = (Integer) e.getValue();
+            vTotal += x;
+            uTotal += x;
+
+            in.put(v, vTotal);
+            out.put(u, uTotal);
+
+            vertices.add(v);
+            vertices.add(u);
+        }
+
+        int s = 0, t = 0;
+
+        for (String v : vertices) {
+            int i, o;
+
+            if (in.containsKey(v)) {
+                i = in.get(v);
+            } else {
+                i = 0;
+            }
+
+            if (out.containsKey(v)) {
+                o = out.get(v);
+            } else {
+                o = 0;
+            }
+
+            if (i != 0 && o == 0) {
+                s = i;
+            } else if (i == 0 && o != 0) {
+                t = o;
             }
         }
 
-        return flow;
+        return (s == t) ? s : -1;
     }
 
     /**
@@ -69,15 +112,10 @@ public class TestMaxFlow {
         int actual, expected;
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        actual = calcFlow(g, max, s);
+        actual = calcFlow(max);
         expected = 0;
 
-        assertThat("Source out flow equals 0", actual, equalTo(expected));
-
-        actual = calcFlow(g, max, t);
-        expected = 0;
-
-        assertThat("Sink in flow equals 0", actual, equalTo(expected));
+        assertThat("Max flow equals 0", actual, equalTo(expected));
     }
 
     /**
@@ -102,15 +140,10 @@ public class TestMaxFlow {
         int actual, expected;
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        actual = calcFlow(g, max, s);
+        actual = calcFlow(max);
         expected = 9;
 
-        assertThat("Source out flow equals 9", actual, equalTo(expected));
-
-        actual = calcFlow(g, max, t);
-        expected = -9;
-
-        assertThat("Sink in flow equals 9", actual, equalTo(expected));
+        assertThat("Max flow equals 9", actual, equalTo(expected));
     }
 
     /**
@@ -155,15 +188,10 @@ public class TestMaxFlow {
         int actual, expected;
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        actual = calcFlow(g, max, s);
+        actual = calcFlow(max);
         expected = 8;
 
-        assertThat("Source out flow equals 23", actual, equalTo(expected));
-
-        actual = calcFlow(g, max, t);
-        expected = -8;
-
-        assertThat("Sink in flow equals 23", actual, equalTo(expected));
+        assertThat("Max flow equals 8", actual, equalTo(expected));
     }
 
     /**
@@ -240,14 +268,40 @@ public class TestMaxFlow {
         int actual, expected;
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
-        actual = calcFlow(g, max, s);
+        actual = calcFlow(max);
         expected = 23;
 
-        assertThat("Source out flow equals 23", actual, equalTo(expected));
-
-        actual = calcFlow(g, max, t);
-        expected = -23;
-
-        assertThat("Sink in flow equals 23", actual, equalTo(expected));
+        assertThat("Max flow equals 23", actual, equalTo(expected));
     }
+
+    /**
+     * Test vertex capacities, simple.
+     */
+    @Test
+    public final void testVertexCapacitiesSimple() {
+        HashMap<String, Integer> c = new HashMap<String, Integer>();
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, t);
+
+        g.addVertex(s);
+        c.put(s, 10);
+
+        g.addVertex(t);
+        c.put(t, 1);
+
+        g.addEdge(e1);
+
+        int actual, expected;
+        Map<Pair<String, String>, Integer> max = mMax.maxFlowWithVertexCapacities(g, s, t, c);
+
+        actual = calcFlow(max);
+        expected = 1;
+
+        assertThat("Max flow equals 1", actual, equalTo(expected));
+    }
+
 }
