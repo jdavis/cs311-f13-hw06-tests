@@ -47,7 +47,7 @@
     </target>
 
     <target name="build-test" depends="init">
-        <javac srcdir="${test.dir}" destdir="${dest.dir}">
+        <javac srcdir="${test.dir}" destdir="${dest.dir}" debug="on">
             <compilerarg value="-Xlint:unchecked"/>
             <include name="TestRunner.java" />
             <classpath refid="classpath.test"/>
