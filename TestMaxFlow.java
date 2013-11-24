@@ -32,7 +32,7 @@ public class TestMaxFlow {
         mMax = TestRunner.newMaxFlow();
     }
 
-    public static int calcFlow(final Map<Pair<String, String>, Integer> f) {
+    public static int[] calcFlow(final Map<Pair<String, String>, Integer> f) {
         HashMap<String, Integer> in = new HashMap<String, Integer>();
         HashMap<String, Integer> out = new HashMap<String, Integer>();
         HashSet<String> vertices = new HashSet<String>();
@@ -92,7 +92,12 @@ public class TestMaxFlow {
             }
         }
 
-        return (s == t) ? s : -1;
+        int[] result = {
+            s,
+            t,
+        };
+
+        return result;
     }
 
     /**
@@ -109,13 +114,16 @@ public class TestMaxFlow {
         g.addVertex(s);
         g.addVertex(t);
 
-        int actual, expected;
+        int[] actual;
+        int expected;
+
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
         actual = calcFlow(max);
         expected = 0;
 
-        assertThat("Max flow equals 0", actual, equalTo(expected));
+        assertThat("Source outflow equals 0", actual[0], equalTo(expected));
+        assertThat("Sink inflow equals 0", actual[1], equalTo(expected));
     }
 
     /**
@@ -137,13 +145,16 @@ public class TestMaxFlow {
         g.addEdge(e1);
         c.put(e1, 9);
 
-        int actual, expected;
+        int[] actual;
+        int expected;
+
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
         actual = calcFlow(max);
         expected = 9;
 
-        assertThat("Max flow equals 9", actual, equalTo(expected));
+        assertThat("Source outflow equals 9", actual[0], equalTo(expected));
+        assertThat("Sink inflow equals 9", actual[1], equalTo(expected));
     }
 
     /**
@@ -185,13 +196,16 @@ public class TestMaxFlow {
         g.addEdge(e4);
         c.put(e4, e4C);
 
-        int actual, expected;
+        int[] actual;
+        int expected;
+
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
         actual = calcFlow(max);
         expected = 8;
 
-        assertThat("Max flow equals 8", actual, equalTo(expected));
+        assertThat("Source outflow equals 8", actual[0], equalTo(expected));
+        assertThat("Sink inflow equals 8", actual[1], equalTo(expected));
     }
 
     /**
@@ -265,13 +279,16 @@ public class TestMaxFlow {
         g.addEdge(e9);
         c.put(e9, e9C);
 
-        int actual, expected;
+        int[] actual;
+        int expected;
+
         Map<Pair<String, String>, Integer> max = mMax.maxFlow(g, s, t, c);
 
         actual = calcFlow(max);
         expected = 23;
 
-        assertThat("Max flow equals 23", actual, equalTo(expected));
+        assertThat("Source outflow equals 23", actual[0], equalTo(expected));
+        assertThat("Sink inflow equals 23", actual[1], equalTo(expected));
     }
 
     /**
@@ -295,13 +312,16 @@ public class TestMaxFlow {
 
         g.addEdge(e1);
 
-        int actual, expected;
+        int[] actual;
+        int expected;
+
         Map<Pair<String, String>, Integer> max = mMax.maxFlowWithVertexCapacities(g, s, t, c);
 
         actual = calcFlow(max);
         expected = 1;
 
-        assertThat("Max flow equals 1", actual, equalTo(expected));
+        assertThat("Source outflow equals 1", actual[0], equalTo(expected));
+        assertThat("Sink inflow equals 1", actual[1], equalTo(expected));
     }
 
 }
