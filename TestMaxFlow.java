@@ -4,14 +4,11 @@ import org.junit.Before;
 import static org.junit.Assert.assertThat;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.everyItem;
-import static org.hamcrest.Matchers.isIn;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import edu.iastate.cs311.f13.hw6.IGraph;
 import edu.iastate.cs311.f13.hw6.IGraph.Pair;
@@ -32,6 +29,12 @@ public class TestMaxFlow {
         mMax = TestRunner.newMaxFlow();
     }
 
+    /**
+     * Calculate the source and sink flow of a given graph.
+     * @param f Flow as a map from Pairs of vertices to the flow
+     * @return An integer array of length 2. First position is source flow,
+     * second is sink flow.
+     */
     public static int[] calcFlow(final Map<Pair<String, String>, Integer> f) {
         HashMap<String, Integer> in = new HashMap<String, Integer>();
         HashMap<String, Integer> out = new HashMap<String, Integer>();
