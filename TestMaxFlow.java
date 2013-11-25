@@ -3,12 +3,18 @@ import org.junit.Before;
 
 import static org.junit.Assert.assertThat;
 
+import org.hamcrest.Matcher;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.anyOf;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Map;
 
 import edu.iastate.cs311.f13.hw6.IGraph;
 import edu.iastate.cs311.f13.hw6.IGraph.Pair;
@@ -99,6 +105,21 @@ public class TestMaxFlow {
             s,
             t,
         };
+
+        return result;
+    }
+
+    /**
+     * Create path from argument list.
+     * @param vertices to add to the path
+     * @return List containing arguments
+     */
+    public static List<String> createPath(final String... vertices) {
+        List<String> result = new ArrayList<String>();
+
+        for (String v : vertices) {
+            result.add(v);
+        }
 
         return result;
     }
