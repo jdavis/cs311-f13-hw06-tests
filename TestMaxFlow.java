@@ -584,11 +584,70 @@ public class TestMaxFlow {
         g.addEdge(e5);
 
         Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, v2, t)),
+            equalTo(createPath(s, v1, t)),
+            equalTo(createPath(s, v2, t)),
         };
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, two overlapped, one with cardinality of 3", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, with a cycle, cardinality of 2", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, with multiple cycles.
+     */
+    @Test
+    public final void testVertexDisjointMultipleCycles() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String v4 = "v4";
+        String v5 = "v5";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v3);
+        Pair<String, String> e3 = new Pair<String, String>(v3, t);
+        Pair<String, String> e4 = new Pair<String, String>(v3, v4);
+
+        Pair<String, String> e5 = new Pair<String, String>(s, v2);
+        Pair<String, String> e6 = new Pair<String, String>(v2, v1);
+        Pair<String, String> e7 = new Pair<String, String>(v2, v5);
+        Pair<String, String> e8 = new Pair<String, String>(v4, v2);
+        Pair<String, String> e9 = new Pair<String, String>(v4, t);
+
+        Pair<String, String> e10 = new Pair<String, String>(v5, v4);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(v5);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+        g.addEdge(e7);
+        g.addEdge(e8);
+        g.addEdge(e9);
+        g.addEdge(e10);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, v1, v3, t)),
+            equalTo(createPath(s, v2, v5, v4, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint, with a multiple cycles.", actual, anyOf(disjointPaths));
     }
 }
