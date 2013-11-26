@@ -348,4 +348,244 @@ public class TestMaxFlow {
         assertThat("Sink inflow equals 1", actual[1], equalTo(expected));
     }
 
+    /**
+     * Test vertex disjoint, no edges.
+     */
+    @Test
+    public final void testVertexDisjointNoEdges() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String t = "t";
+
+        g.addVertex(s);
+        g.addVertex(t);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(Collections.EMPTY_LIST),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint with no edges", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, two vertices.
+     */
+    @Test
+    public final void testVertexDisjointTwoVertices() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, t);
+
+        g.addVertex(s);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint with two vertices", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, three vertices.
+     */
+    @Test
+    public final void testVertexDisjointThreeVertices() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(v1, t);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, v1, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint with three vertices", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, two paths.
+     */
+    @Test
+    public final void testVertexDisjointTwoSimplePaths() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(v1, t);
+
+        Pair<String, String> e3 = new Pair<String, String>(s, v2);
+        Pair<String, String> e4 = new Pair<String, String>(v2, t);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, v1, t)),
+            equalTo(createPath(s, v2, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint with two simple paths", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, three paths, two with cardinality of 3.
+     */
+    @Test
+    public final void testVertexDisjointThreeSimplePaths() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(v1, t);
+
+        Pair<String, String> e3 = new Pair<String, String>(s, v2);
+        Pair<String, String> e4 = new Pair<String, String>(v2, t);
+
+        Pair<String, String> e5 = new Pair<String, String>(s, t);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, v1, t)),
+            equalTo(createPath(s, v2, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint, three paths, two with cardinality of 2", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, four paths, one with cardinality of 4.
+     */
+    @Test
+    public final void testVertexDisjointFourSimplePaths() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(v1, v2);
+        Pair<String, String> e3 = new Pair<String, String>(v2, t);
+
+        Pair<String, String> e4 = new Pair<String, String>(s, v3);
+        Pair<String, String> e5 = new Pair<String, String>(v3, t);
+
+        Pair<String, String> e6 = new Pair<String, String>(s, t);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, v1, v2, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint, four paths, one with cardinality of 4", actual, anyOf(disjointPaths));
+    }
+
+    /**
+     * Test vertex disjoint, overlapped paths, one with cardinality 3.
+     */
+    @Test
+    public final void testVertexDisjointOverlapThreePaths() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(v1, t);
+
+        Pair<String, String> e3 = new Pair<String, String>(s, v2);
+        Pair<String, String> e4 = new Pair<String, String>(v2, t);
+
+        Pair<String, String> e5 = new Pair<String, String>(v1, v2);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+
+        Matcher<?>[] disjointPaths = {
+            equalTo(createPath(s, v1, v2, t)),
+        };
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint, two overlapped, one with cardinality of 3", actual, anyOf(disjointPaths));
+    }
 }
