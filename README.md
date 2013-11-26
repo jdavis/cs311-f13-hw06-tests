@@ -15,7 +15,7 @@ CS311 Homework 6 Tests
 - JUnit 4.11
 - Hamcrest 1.3
 
-They jars are included in the repo.
+The jars are included in the repo.
 
 **Note:**
 > It's important to use JUnit 4.11 *and* Hamcrest 1.3. If you don't, there will
