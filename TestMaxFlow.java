@@ -465,10 +465,10 @@ public class TestMaxFlow {
     }
 
     /**
-     * Test vertex disjoint, three paths, two with cardinality of 3.
+     * Test vertex disjoint, three paths
      */
     @Test
-    public final void testVertexDisjointThreeSimplePaths() {
+    public final void testVertexDisjointThreePaths() {
         IGraph g = TestRunner.newGraph();
 
         String s = "s";
@@ -503,14 +503,14 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, three paths, cardinality of 3.", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, three paths", actual, anyOf(disjointPaths));
     }
 
     /**
      * Test vertex disjoint, three paths, cardinality of 3.
      */
     @Test
-    public final void testVertexDisjointThreeSimplePaths() {
+    public final void testVertexDisjointThreePathsSlightlyMoreComplex() {
         IGraph g = TestRunner.newGraph();
 
         String s = "s";
@@ -549,7 +549,7 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, three paths, cardinality of 3", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, three paths, slightly more complex", actual, anyOf(disjointPaths));
     }
 
     /**
