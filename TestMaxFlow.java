@@ -4,6 +4,7 @@ import org.junit.Before;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matcher;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.anyOf;
 
@@ -362,12 +363,11 @@ public class TestMaxFlow {
         g.addVertex(t);
 
         Matcher<?>[] disjointPaths = {
-            equalTo(Collections.EMPTY_LIST),
         };
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint with no edges", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint with no edges", actual, containsInAnyOrder(disjointPaths));
     }
 
     /**
@@ -393,8 +393,9 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint with two vertices", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint with two vertices", actual, containsInAnyOrder(disjointPaths));
     }
+
 
     /**
      * Test vertex disjoint, three vertices.
@@ -423,7 +424,7 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint with three vertices", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint with three vertices", actual, containsInAnyOrder(disjointPaths));
     }
 
     /**
@@ -461,7 +462,9 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint with two simple paths", actual, anyOf(disjointPaths));
+        System.out.println("Simple paths actual: " + actual);
+
+        assertThat("Vertex disjoint with two simple paths", actual, containsInAnyOrder(disjointPaths));
     }
 
     /**
@@ -503,7 +506,7 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, three paths", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, three paths", actual, containsInAnyOrder(disjointPaths));
     }
 
     /**
@@ -549,7 +552,7 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, three paths, slightly more complex", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, three paths, slightly more complex", actual, containsInAnyOrder(disjointPaths));
     }
 
     /**
@@ -590,7 +593,7 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, with a cycle, cardinality of 2", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, with a cycle, cardinality of 2", actual, containsInAnyOrder(disjointPaths));
     }
 
     /**
@@ -648,6 +651,6 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, with a multiple cycles.", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, with a multiple cycles.", actual, containsInAnyOrder(disjointPaths));
     }
 }
