@@ -49,9 +49,12 @@ work.
    1. You should change `return new Graph();` such that `Graph` is the class
       you wrote that implements `IGraph`.
 
-   2. You should change `return new TopologicalSort();` such that
-      `TopologicalSort` is the class you wrote that implements
+   2. You should change `return new TopologicalSortAlgorithms();` such that
+      `TopologicalSortAlgorithms` is the class you wrote that implements
       `ITopologicalSortAlgorithms`.
+   3. You should change `return new MaxFlowAlgorithms();` such that
+      `MaxFlowAlgorithms` is the class you wrote that implements
+      `IMaxFlowAlgorithms`.
 
 3. Now you should just be able to run `ant test` on the command line.
 
