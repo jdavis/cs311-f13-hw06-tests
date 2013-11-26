@@ -462,8 +462,6 @@ public class TestMaxFlow {
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        System.out.println("Simple paths actual: " + actual);
-
         assertThat("Vertex disjoint with two simple paths", actual, containsInAnyOrder(disjointPaths));
     }
 
