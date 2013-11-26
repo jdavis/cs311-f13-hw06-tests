@@ -8,7 +8,7 @@ CS311 Homework 6 Tests
 - ✓ Parallel Precedence-Constrained Scheduling
 - ✓ Maximum Flow
 - ✓ Maximum Flow with Vertex Capacities
-- Maximum Cardinality Pairwise Vertex-Disjoint Paths
+- ✓ Maximum Cardinality Pairwise Vertex-Disjoint Paths
 
 ## Dependencies
 
