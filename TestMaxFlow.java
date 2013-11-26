@@ -498,18 +498,19 @@ public class TestMaxFlow {
         Matcher<?>[] disjointPaths = {
             equalTo(createPath(s, v1, t)),
             equalTo(createPath(s, v2, t)),
+            equalTo(createPath(s, t)),
         };
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, three paths, two with cardinality of 2", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, three paths, cardinality of 3.", actual, anyOf(disjointPaths));
     }
 
     /**
-     * Test vertex disjoint, four paths, one with cardinality of 4.
+     * Test vertex disjoint, three paths, cardinality of 3.
      */
     @Test
-    public final void testVertexDisjointFourSimplePaths() {
+    public final void testVertexDisjointThreeSimplePaths() {
         IGraph g = TestRunner.newGraph();
 
         String s = "s";
@@ -542,18 +543,20 @@ public class TestMaxFlow {
 
         Matcher<?>[] disjointPaths = {
             equalTo(createPath(s, v1, v2, t)),
+            equalTo(createPath(s, v3, t)),
+            equalTo(createPath(s, t)),
         };
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
-        assertThat("Vertex disjoint, four paths, one with cardinality of 4", actual, anyOf(disjointPaths));
+        assertThat("Vertex disjoint, three paths, cardinality of 3", actual, anyOf(disjointPaths));
     }
 
     /**
-     * Test vertex disjoint, overlapped paths, one with cardinality 3.
+     * Test vertex disjoint, with a cycle, cardinality 2.
      */
     @Test
-    public final void testVertexDisjointOverlapThreePaths() {
+    public final void testVertexDisjointCycleSetOfTwo() {
         IGraph g = TestRunner.newGraph();
 
         String s = "s";
