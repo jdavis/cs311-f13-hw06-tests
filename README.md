@@ -10,8 +10,9 @@ CS311 Homework 6 Tests
 - ✓ Maximum Flow with Vertex Capacities
 - ✓ Maximum Cardinality Pairwise Vertex-Disjoint Paths
 
-## Dependencies
+## Requirements/Dependencies
 
+- Java 6 or Java 7
 - JUnit 4.11
 - Hamcrest 1.3
 
