@@ -36,6 +36,7 @@
 
     <target name="init">
         <mkdir dir="${dest.dir}"/>
+        <echo>Building Using Java: ${java.version}</echo>
     </target>
 
     <target name="clean">
