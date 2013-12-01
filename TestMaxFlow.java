@@ -4,10 +4,11 @@ import org.junit.Before;
 import static org.junit.Assert.assertThat;
 
 import org.hamcrest.Matcher;
+import org.hamcrest.core.IsEqual;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.anyOf;
 
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -362,8 +363,7 @@ public class TestMaxFlow {
         g.addVertex(s);
         g.addVertex(t);
 
-        Matcher<?>[] disjointPaths = {
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -387,9 +387,9 @@ public class TestMaxFlow {
 
         g.addEdge(e1);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -418,9 +418,9 @@ public class TestMaxFlow {
         g.addEdge(e1);
         g.addEdge(e2);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -455,10 +455,10 @@ public class TestMaxFlow {
         g.addEdge(e3);
         g.addEdge(e4);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, t)),
-            equalTo(createPath(s, v2, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v2, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -496,11 +496,11 @@ public class TestMaxFlow {
         g.addEdge(e4);
         g.addEdge(e5);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, t)),
-            equalTo(createPath(s, v2, t)),
-            equalTo(createPath(s, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v2, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -542,11 +542,11 @@ public class TestMaxFlow {
         g.addEdge(e5);
         g.addEdge(e6);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, v2, t)),
-            equalTo(createPath(s, v3, t)),
-            equalTo(createPath(s, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, v2, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v3, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -584,10 +584,10 @@ public class TestMaxFlow {
         g.addEdge(e4);
         g.addEdge(e5);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, t)),
-            equalTo(createPath(s, v2, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v2, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
@@ -642,10 +642,10 @@ public class TestMaxFlow {
         g.addEdge(e9);
         g.addEdge(e10);
 
-        Matcher<?>[] disjointPaths = {
-            equalTo(createPath(s, v1, v3, t)),
-            equalTo(createPath(s, v2, v5, v4, t)),
-        };
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, v3, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v2, v5, v4, t)));
 
         Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
 
