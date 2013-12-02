@@ -1,8 +1,8 @@
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.empty;
@@ -55,9 +55,6 @@ public class TestGraph {
         g.addVertex(v);
 
         Collection<String> actual = g.getVertices();
-        Collection<String> expected = new ArrayList<String>();
-
-        expected.add(v);
 
         assertThat("Adding a vertex should exist", actual, hasItem(v));
     }
@@ -163,6 +160,7 @@ public class TestGraph {
      * Test if adding adding a vertex multiple times keeps previous edges.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public final void testAddVertexMultipleTimes() {
         IGraph g = TestRunner.newGraph();
         String v = "A";
@@ -181,11 +179,8 @@ public class TestGraph {
         g.addVertex(v);
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
-        Collection<Pair<String, String>> expected = new ArrayList<Pair<String, String>>();
 
-        expected.add(e);
-
-        assertThat("First vertex should have one edge", actual, equalTo(expected));
+        assertThat("First vertex should have one edge", actual, hasItems(e));
 
         actual = g.getOutgoingEdges(u);
 
@@ -218,6 +213,7 @@ public class TestGraph {
      * Test of multiple outgoing edges.
      */
     @Test
+    @SuppressWarnings("unchecked")
     public final void testMultipleEdgesSimple() {
         IGraph g = TestRunner.newGraph();
         String v = "A";
@@ -235,19 +231,11 @@ public class TestGraph {
         g.addEdge(e2);
 
         Collection<Pair<String, String>> actual = g.getOutgoingEdges(v);
-        Collection<Pair<String, String>> expected = new ArrayList<Pair<String, String>>();
-
-        expected.add(e1);
-
-        assertThat("First vertex should have one edge", actual, equalTo(expected));
+        assertThat("First vertex should have one edge", actual, hasItems(e1));
 
         actual = g.getOutgoingEdges(u);
 
-        expected = new ArrayList<Pair<String, String>>();
-
-        expected.add(e2);
-
-        assertThat("Second vertex should have one edge", actual, equalTo(expected));
+        assertThat("Second vertex should have one edge", actual, hasItems(e2));
 
         actual = g.getOutgoingEdges(w);
 
