@@ -401,7 +401,7 @@ public class TestTopologicalSort {
         int expected = v1Time + v2Time;
         int actual = topo.minScheduleLength(g, times);
 
-        assertThat("Minimum schedule should be 42", actual, equalTo(expected));
+        assertThat("Minimum schedule should be 45", actual, equalTo(expected));
     }
 
     /**
