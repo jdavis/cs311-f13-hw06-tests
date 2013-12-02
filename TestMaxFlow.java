@@ -552,6 +552,57 @@ public class TestMaxFlow {
 
         assertThat("Vertex disjoint, three paths, slightly more complex", actual, containsInAnyOrder(disjointPaths));
     }
+    
+    /**
+     * Test vertex disjoint, using complex flow graph
+     */
+    @Test
+    public final void testVertexDisjointComplex() {
+        IGraph g = TestRunner.newGraph();
+
+        String s = "s";
+        String v1 = "v1";
+        String v2 = "v2";
+        String v3 = "v3";
+        String v4 = "v4";
+        String t = "t";
+
+        Pair<String, String> e1 = new Pair<String, String>(s, v1);
+        Pair<String, String> e2 = new Pair<String, String>(s, v2);
+        Pair<String, String> e3 = new Pair<String, String>(v1, v3);
+        Pair<String, String> e4 = new Pair<String, String>(v2, v1);
+        Pair<String, String> e5 = new Pair<String, String>(v2, v4);
+        Pair<String, String> e6 = new Pair<String, String>(v3, v2);
+        Pair<String, String> e7 = new Pair<String, String>(v3, t);
+        Pair<String, String> e8 = new Pair<String, String>(v4, v3);
+        Pair<String, String> e9 = new Pair<String, String>(v4, t);
+
+        g.addVertex(s);
+        g.addVertex(v1);
+        g.addVertex(v2);
+        g.addVertex(v3);
+        g.addVertex(v4);
+        g.addVertex(t);
+
+        g.addEdge(e1);
+        g.addEdge(e2);
+        g.addEdge(e3);
+        g.addEdge(e4);
+        g.addEdge(e5);
+        g.addEdge(e6);
+        g.addEdge(e7);
+        g.addEdge(e8);
+        g.addEdge(e9);
+
+        List<Matcher<? super List<String>>> disjointPaths = new ArrayList<Matcher<? super List<String>>>();
+
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v1, v3, t)));
+        disjointPaths.add(IsEqual.<List<String>>equalTo(Arrays.<String>asList(s, v2, v4, t)));
+
+        Collection<List<String>> actual = mMax.maxVertexDisjointPaths(g, s, t);
+
+        assertThat("Vertex disjoint, using complex flow graph", actual, containsInAnyOrder(disjointPaths));
+    }
 
     /**
      * Test vertex disjoint, with a cycle, cardinality 2.
